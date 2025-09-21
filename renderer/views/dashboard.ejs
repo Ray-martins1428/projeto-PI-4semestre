@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Gonçalves</title>
+
+  <link rel="stylesheet" href="/css/dashboard.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <header class="header-aside">
+    <nav>
+      <div class="logo-ultra">
+        <img src="/img/ulta.png" alt="Logo Ultragaz" />
+      </div>
+      <div class="container-menu">
+        <ul class="menu-links">
+          <li>
+            <a href="/dashboard"><span class="menu-svg"><img src="/img/dashboard-svgrepo-com.svg" alt="Dashboard"
+                  width="40px" height="40px" /></span>Dashboard</a>
+          </li>
+          <li>
+            <a href="/estoque"><span class="menu-svg"><img src="/img/stock-svgrepo-com.svg" alt="Estoque" width="40px"
+                  height="30px" /></span>Controle de Estoque</a>
+          </li>
+          <li>
+            <a href="/funcionarios"><span><img src="/img/employee-id-svgrepo-com.svg" alt="Empregado" width="40px"
+                  height="35px" /></span>Gestão de Funcionário</a>
+          </li>
+          <li>
+            <a href="/"><span><img src="/img/exit-svgrepo-com.svg" alt="Saida" width="40px"
+                  height="35px" /></span>Sair</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="dash-container">
+      <div class="container-content">
+        <h1>Dashboard Gonçalves</h1>
+
+        <div class="dash-cards">
+          <div class="dash-card">
+            <h3>Vendas de Gás</h3>
+            <p>Qtd: 120</p>
+          </div>
+          <div class="dash-card">
+            <h3>Vendas de Água</h3>
+            <p>Qtd: 80</p>
+          </div>
+          <div class="dash-card">
+            <h3>Valor Total de Vendas</h3>
+            <p>R$ 5.400,00</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+          <h2>Vendas Mensais</h2>
+          <canvas id="vendasMensais" width="600" height="250"></canvas>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const ctx = document.getElementById('vendasMensais').getContext('2d');
+    const vendasMensaisChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Fev', 'Mar', 'Abr'],
+        datasets: [{
+          label: 'Vendas (%)',
+          data: [80, 55, 95, 40],
+          backgroundColor: ['#0061A2', '#007bff', '#3399ff', '#66b2ff'],
+          borderWidth: 1,
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true, max: 100 }
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

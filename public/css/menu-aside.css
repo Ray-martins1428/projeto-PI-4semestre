@@ -1,0 +1,67 @@
+:root {
+    --azul-ultra: #0061A2;
+    --azul-hover: #003253;
+    --azul-gradient-start: #003253;
+    --azul-gradient-end: #0061A2;
+    --fundo-body: #f4f4f4;
+}
+
+body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    background-color: var(--fundo-body);
+    box-sizing: border-box;
+}
+
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.container {
+    display: flex;
+}
+
+.header-aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background: linear-gradient(to bottom, var(--azul-gradient-start), var(--azul-gradient-end));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.logo-ultra img {
+    margin-top: 24px;
+    width: 200px;
+    height: 128px;
+}
+
+.header-aside ul {
+    width: 100%;
+    padding-top: 20px;
+    margin: 0;
+}
+
+.header-aside ul li {
+    width: 100%;
+    text-align: center;
+    padding: 8px 0;
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.header-aside ul li:hover {
+    background-color: var(--azul-hover);
+    border-radius: 6px;
+}

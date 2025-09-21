@@ -1,0 +1,38 @@
+@import url(menu-aside.css);
+
+.container-menu{
+    margin-top: 30px;
+}
+
+.menu-links{
+    list-style: none;
+    width: 140px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-links li{
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.menu-links a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+}
+
+.menu-links span {
+    margin-right: 10px; 
+    display: inline-flex;
+    align-items: center;
+}

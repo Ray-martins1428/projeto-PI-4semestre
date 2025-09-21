@@ -1,0 +1,76 @@
+@import url(menu-aside.css);
+
+
+.login-sec{
+    text-align: center;
+    display: flex;
+    background-color: #ffff;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 220px;
+}
+
+.login-txt{
+    margin-top: 95px;
+    line-height: 95%;
+}
+
+.login-txt h1{
+    font-size: 80px;
+    color:var(--azul-ultra);
+    font-style: italic;
+}
+
+.login-txt h2{
+    font-size: 36px;
+    font-weight: 400;
+    color: #27223F;
+}
+
+.login-form{
+    display: flex; 
+    flex-direction: column;
+    margin-top: 15px;
+    align-items: center;
+}
+
+.form-login{
+    display: flex;
+    flex-direction: column;
+}
+
+ .form-login label{
+    font-size: 22px;
+    color: #8C8C8C;
+    text-align: left;
+}
+
+.form-login input{
+    border: 1px solid #BABABA;
+    width: 400px;
+    height: 60px;
+    color: #303030;
+    font-size: 24px;
+    border-radius: 4px;
+    padding: 0px 8px;
+} 
+
+.login-form button{
+    background-color: var(--azul-ultra);
+    width: 418px;
+    height: 60px;
+    border-radius: 8px;
+    color: #ffff;
+    font-size: 24px;
+    font-weight: 400;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    transition: transform 150ms ease-in, background 150ms ease-in;
+}   
+
+
+.login-form button:hover{
+    background-color:rgb(1, 40, 66);
+    transform: translateY(-2px) scale(1.02);
+}

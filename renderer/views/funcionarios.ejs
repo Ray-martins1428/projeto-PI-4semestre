@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/funcionario.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <main class="container">
+    <header class="header-aside">
+      <nav>
+        <div class="logo-ultra">
+          <img src="/img/ulta.png" alt="Logo Ultragaz" srcset="" />
+        </div>
+        <div class="container-menu">
+          <ul class="menu-links">
+            <li>
+              <a href="/dashboard"><span class="menu-svg"><img src="/img/dashboard-svgrepo-com.svg" alt="Dashboard"
+                    width="40px" height="40px" /></span>Dashboard</a>
+            </li>
+            <li>
+              <a href="/estoque"><span class="menu-svg"><img src="/img/stock-svgrepo-com.svg" alt="Estoque" width="40px"
+                    height="30px" /></span>Controle de Estoque</a>
+            </li>
+            <li>
+              <a href="/funcionarios"><span><img src="/img/employee-id-svgrepo-com.svg" alt="Empregado" width="40px"
+                    height="35px" /></span>Gestão de Funcionario</a>
+            </li>
+            <li>
+              <a href="/"><span><img src="/img/exit-svgrepo-com.svg" alt="Saida" width="40px"
+                    height="35px" /></span>Sair</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <section class="func-container">
+      <div class="func-content">
+        <h1>Gestão de Funcionario</h1>
+
+        <div class="barra-pesquisa">
+          <img class="icone-pesquisa" src="/img/search-svgrepo-com.svg" alt="Ícone de Pesquisa">
+
+          <input type="text" id="campoPesquisa" placeholder="Nome funcionario...">
+
+          <img class="icone-enviar" src="/img/arrow-sm-right-svgrepo-com.svg" alt="Enviar Pesquisa">
+        </div>
+        <div class="estq-card">
+          <div class="tabela-cabecalho">
+            <span class="coluna nome-func">NOME</span>
+            <span class="coluna funcao">FUNÇAO</span>
+            <span class="coluna status">STATUS</span>
+            <span class="coluna acoes"></span>
+          </div>
+
+          <div class="tabela-corpo" id="tabela-corpo">
+            <div class="tabela-linha">
+            </div>
+          </div>
+
+          <div class="botoes-globais">
+            <button class="btn-global registrar" id="abrirModal">
+              Cadastrar funcionario
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 
+      MODAL DE ADD FUNCIONARIO -->
+      <div class="modal" id="modal">
+        <div class="modal-content">
+          <span class="close" id="close">&times;</span>
+          <h2>Cadastro de Colaborador</h2>
+          <input type="text" id="nome" placeholder="Nome Completo" />
+          <input type="email" id="email" placeholder="Email" />
+          <input type="text" id="cpf" placeholder="CPF" />
+          <input type="text" id="numero" placeholder="Celular" />
+          <input type="text" id="endereco" placeholder="Endereco" />
+          <input type="text" id="complemento" placeholder="Complemento/Nº ">
+          <input type="text" id="bairro" placeholder="Bairro ">
+          <div class="grupo-radios">
+            <div>
+              <input type="radio" id="gas" name="funcao">
+              <label for="gas">Ent. de Gás</label>
+            </div>
+            <div>
+              <input type="radio" id="secretaria" name="funcao">
+              <label for="secretaria">Secretaria</label>
+            </div>
+            <div>
+              <input type="radio" id="deposito" name="funcao">
+              <label for="deposito">Aux. Depósito</label>
+            </div>
+          </div>
+          <div class="grupo-radios">
+            <div>
+              <input type="radio" name="status" id="ativo">
+              <label for="ativo">Ativo</label>
+            </div>
+            <div>
+              <input type="radio" name="status" id="inativo">
+              <label for="inativo">Inativo</label>
+            </div>
+          </div>
+          <div class="mensagem-erro" id="mensagemErro"></div>
+          <button class="btn-cadastrar" id="cadastrar">Cadastrar</button>
+        </div>
+      </div>
+
+      <!-- 
+      MODAL DE EDIT FUNCIONARIO -->
+
+      <div class="modal" id="modalEditar">
+        <div class="modal-content">
+          <span class="close" id="closeEditar">&times;</span>
+          <h2>Editar Colaborador <span class="nome-colab">{NOME DO COLABORADOR}</span></h2>
+
+          <input type="text" id="numero" placeholder="Celular" />
+          <input type="text" id="endereco" placeholder="Endereço" />
+          <input type="text" id="complemento" placeholder="Complemento/Nº">
+          <input type="text" id="bairro" placeholder="Bairro">
+
+          <div class="grupo-radios">
+            <div>
+              <input type="radio" id="gasEditar" name="funcaoEditar">
+              <label for="gasEditar">Ent. de Gás</label>
+            </div>
+            <div>
+              <input type="radio" id="secretariaEditar" name="funcaoEditar">
+              <label for="secretariaEditar">Secretaria</label>
+            </div>
+            <div>
+              <input type="radio" id="depositoEditar" name="funcaoEditar">
+              <label for="depositoEditar">Aux. Depósito</label>
+            </div>
+          </div>
+
+          <div class="grupo-radios">
+            <div>
+              <input type="radio" name="statusEditar" id="ativoEditar">
+              <label for="ativoEditar">Ativo</label>
+            </div>
+            <div>
+              <input type="radio" name="statusEditar" id="inativoEditar">
+              <label for="inativoEditar">Inativo</label>
+            </div>
+          </div>
+          <div class="mensagem-erro" id="mensagemErroEditar"></div>
+          <button class="btn-cadastrar" id="salvarEdicao">Salvar</button>
+        </div>
+      </div>
+
+      <script src="/js/funcionario.js"></script>
+
+    </section>
+
+
+  </main>
+
+</body>
+
+</html>
