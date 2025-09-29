@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `gestao_ultragaz` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `gestao_ultragaz`;
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gestao_ultragaz
@@ -248,14 +250,6 @@ LOCK TABLES `vendas` WRITE;
 INSERT INTO `vendas` VALUES (1,'2025-09-27',2,220.00,1,2,2),(2,'2025-09-27',2,140.00,2,1,3),(3,'2025-09-27',2,340.00,3,3,2),(4,'2025-09-27',2,900.00,4,2,3),(5,'2025-09-27',2,50.00,5,4,2),(6,'2025-09-27',2,2.00,6,2,3);
 /*!40000 ALTER TABLE `vendas` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'gestao_ultragaz'
---
-
---
--- Dumping routines for database 'gestao_ultragaz'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -266,4 +260,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-29 19:34:06
+-- Dump completed on 2025-09-29 19:47:43
