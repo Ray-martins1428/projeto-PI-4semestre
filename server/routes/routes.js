@@ -28,5 +28,9 @@ router.get('/funcionarios', (req, res) => {
     res.render('funcionarios');
 });
 
+router.get('/venda', (req, res) => {
+    res.render('venda');
+});
+
 
 module.exports = router;
