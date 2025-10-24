@@ -53,7 +53,8 @@
 }
 
 .texto{
-    text-align: center;
+    text-align: left;
+    font-size: 28px;
     font-weight: 500;
     margin-bottom: 20px;
     color: var(--azul-ultra);

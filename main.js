@@ -11,7 +11,7 @@ function createWindow() {
   win.loadURL("http://localhost:4040");
 
   // comando para ver o devtools ver erros
-  //  win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 }
 
 app.whenReady().then(() => {

@@ -32,5 +32,8 @@ router.get('/venda', (req, res) => {
     res.render('venda');
 });
 
+router.get('/cria-func', (req, res) => {
+  res.render('cria-func');
+});
 
 module.exports = router;
