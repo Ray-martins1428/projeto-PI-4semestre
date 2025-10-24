@@ -1,0 +1,111 @@
+@import url(menu-aside.css);
+@import url(menu-aside-logado.css);
+
+
+.venda-container {
+  background-color: white;
+  width: 100%;
+  margin-left: 220px; /* espaço para o menu lateral */
+  min-height: 100vh;
+  padding: 20px;
+}
+
+
+.venda-tela {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+}
+
+#form-venda {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 700px;
+  padding: 30px;
+  border: 1px solid var(--azul-ultra);
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+#form-venda h2 {
+  font-size: 26px;
+  color: var(--azul-ultra);
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+
+.input-texto {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.input-texto input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.input-texto input:focus {
+  border-color: var(--azul-ultra);
+  outline: none;
+}
+
+.input-texto input:nth-child(5){
+    grid-column: span 2;
+}
+
+
+.grupo-radios {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+
+.grupo-radios div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.grupo-radios input[type="radio"] {
+  transform: scale(1.2);
+  accent-color: var(--azul-ultra);
+  cursor: pointer;
+}
+
+
+.mensagem-erro {
+  color: red;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.btn-cadastrar {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--azul-ultra);
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn-cadastrar:hover {
+  background-color: var(--azul-hover);
+}
