@@ -10,6 +10,10 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../renderer/views'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json()); //
+const loginRoutes = require('./routes/api/loginRoutes');
+app.use('/api', loginRoutes);
+
 app.use(dashboardRoutes);
 
 app.get('/', (req, res) => {
