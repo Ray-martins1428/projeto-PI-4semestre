@@ -2,6 +2,10 @@
 @import url(menu-aside-logado.css);
 
 
+body{
+  overflow-y: hidden;
+}
+
 .venda-container {
   background-color: white;
   width: 100%;
@@ -22,12 +26,13 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 700px;
+  width: 690px;
   padding: 30px;
   border: 1px solid var(--azul-ultra);
   border-radius: 8px;
   background-color: #f9f9f9;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
 
 
@@ -45,6 +50,13 @@
   gap: 15px;
 }
 
+/* Nome e Endereço ocupam linha inteira */
+#nome,
+#endereco {
+  grid-column: span 2;
+}
+
+/* Inputs gerais */
 .input-texto input {
   padding: 10px;
   border: 1px solid #ccc;
@@ -58,9 +70,8 @@
   outline: none;
 }
 
-.input-texto input:nth-child(5){
-    grid-column: span 2;
-}
+
+
 
 
 .grupo-radios {
