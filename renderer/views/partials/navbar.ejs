@@ -6,37 +6,91 @@
 
     <div class="container-menu">
       <ul class="menu-links">
+        <% if (usuario && (usuario.perfil === 1 || usuario.login ===
+        'ADMINISTRADOR' || usuario.login === 'admin')) { %>
+
         <li>
           <a href="/dashboard">
-            <span class="menu-svg"><img src="/img/dashboard-svgrepo-com.svg" alt="Dashboard" width="40" height="40" /></span>
+            <span class="menu-svg"
+              ><img
+                src="/img/dashboard-svgrepo-com.svg"
+                alt="Dashboard"
+                width="40"
+                height="40"
+            /></span>
             Dashboard
           </a>
         </li>
         <li>
           <a href="/estoque">
-            <span class="menu-svg"><img src="/img/stock-svgrepo-com.svg" alt="Estoque" width="40" height="30" /></span>
+            <span class="menu-svg"
+              ><img
+                src="/img/stock-svgrepo-com.svg"
+                alt="Estoque"
+                width="40"
+                height="30"
+            /></span>
             Controle de Estoque
           </a>
         </li>
         <li>
           <a href="/funcionarios">
-            <span><img src="/img/employee-id-svgrepo-com.svg" alt="Empregado" width="40" height="35" /></span>
+            <span
+              ><img
+                src="/img/employee-id-svgrepo-com.svg"
+                alt="Empregado"
+                width="40"
+                height="35"
+            /></span>
             Gestão de Funcionário
           </a>
         </li>
+        <% } %>
+
+        <!-- Itens que aparecem para todos os logados -->
+        <% if (usuario) { %>
         <li>
           <a href="/venda">
-            <span><img src="/img/shop-2-svgrepo-com (1).svg" alt="Venda" width="40" height="35" /></span>
+            <span
+              ><img
+                src="/img/shop-2-svgrepo-com (1).svg"
+                alt="Venda"
+                width="40"
+                height="35"
+            /></span>
             Venda
           </a>
         </li>
         <li>
-          <a href="/">
-            <span><img src="/img/exit-svgrepo-com.svg" alt="Saida" width="40" height="35" /></span>
+          <a href="#" id="link-logout">
+            <span
+              ><img
+                src="/img/exit-svgrepo-com.svg"
+                alt="Saida"
+                width="40"
+                height="35"
+            /></span>
             Sair
           </a>
         </li>
+        <% } else { %>
+        <!-- Caso não logado (mostre apenas link para login) -->
+        <li>
+          <a href="/">
+            <span
+              ><img
+                src="/img/exit-svgrepo-com.svg"
+                alt="Login"
+                width="40"
+                height="35"
+            /></span>
+            Entrar
+          </a>
+        </li>
+        <% } %>
       </ul>
+
+      <script src="/js/navbar.js"></script>
     </div>
   </nav>
 </header>
