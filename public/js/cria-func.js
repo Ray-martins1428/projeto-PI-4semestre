@@ -38,13 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
     msgErro.textContent = ""; // limpa erro anterior
 
     // Coleta dos campos
-    const nomeCompleto = document.getElementById("nome").value.trim();
-    const email = document.getElementById("email").value.trim();
+    const nomeCompleto = document.getElementById("nome").value.trim().toLowerCase();
+    const email = document.getElementById("email").value.trim().toLowerCase();
     const cpf = cpfInput.value.replace(/\D/g, ""); // remove formatação
     const numero = celularInput.value.replace(/\D/g, ""); // remove formatação
-    const endereco = document.getElementById("endereco").value.trim();
-    const complemento = document.getElementById("complemento").value.trim();
-    const bairro = document.getElementById("bairro").value.trim();
+    const endereco = document.getElementById("endereco").value.trim().toLowerCase();
+    const complemento = document.getElementById("complemento").value.trim().toLowerCase();
+    const bairro = document.getElementById("bairro").value.trim().toLowerCase();
     const dataNascimento = document.getElementById("dataNascimento")?.value;
 
     // Quebra nome completo (primeiro + ultimo)
@@ -53,12 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const sobrenome = partesNome.slice(1).join(" ");
 
     // Função e status
-    const funcao = document.querySelector('input[name="funcao"]:checked')?.id || null;
-    const status =
-      document.querySelector('input[name="status"]:checked')?.id === "ativo" ? 1 : 0;
+    const funcao = document.querySelector('input[name="funcao"]:checked')?.value;
+    const status = document.querySelector('input[name="status"]:checked')?.id === "ativo" ? 1 : 0;
 
     // Validação básica
-    if (!nome || !cpf || !dataNascimento) {
+    // Deixar email opcional? caso não adicionar validação
+    if (!nome || !cpf || !dataNascimento || !funcao) {
       msgErro.textContent = "Preencha nome, CPF e data de nascimento!";
       return;
     }
@@ -70,15 +70,16 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({
           nome,
           sobrenome,
+          email: email,
           RG: "",
           CPF: cpf,
           celular: numero,
           telefone: "",
           data_nascimento: dataNascimento, 
-          endereco,
-          complemento,
-          bairro,
-          funcao,
+          endereco: endereco,
+          complemento: complemento,
+          bairro: bairro,
+          funcao: funcao,
           ativo: status,
         }),
       });

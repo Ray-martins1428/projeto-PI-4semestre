@@ -19,6 +19,7 @@ exports.listarFuncionarios = async (req, res) => {
       FROM cadastro_funcionario f
       LEFT JOIN usuarios u ON f.id_funcionario = u.cadastro_funcionario_id_funcionario
       LEFT JOIN perfil p ON u.perfil_id_cargos = p.id_cargos
+      WHERE p.nome <> 'ADMINISTRADOR'
       ORDER BY f.id_funcionario;
     `);
 
@@ -29,6 +30,41 @@ exports.listarFuncionarios = async (req, res) => {
   }
 };
 
+
+// ========================
+// PESQUISAR FUNCIONÁRIOS
+// ========================
+exports.pesquisarFuncionario = async (req, res) => {
+  try {
+    const { nome } = req.query;
+    
+    // Correção: Remover as aspas simples extras e usar CONCAT para o LIKE
+    const [rows] = await db.query(`
+      SELECT 
+        f.id_funcionario,
+        f.nome,
+        f.sobrenome,
+        f.RG,
+        f.CPF,
+        f.celular,
+        f.telefone,
+        IFNULL(p.nome, '') AS perfil_nome,
+        IFNULL(u.ativo, 0) AS ativo
+      FROM cadastro_funcionario f
+      LEFT JOIN usuarios u ON f.id_funcionario = u.cadastro_funcionario_id_funcionario
+      LEFT JOIN perfil p ON u.perfil_id_cargos = p.id_cargos
+      WHERE p.nome <> 'ADMINISTRADOR'
+      AND f.nome LIKE CONCAT('%', ?, '%')
+    `, [nome]);
+
+    res.json(rows);
+  } catch (err) {
+    console.error('Erro ao buscar funcionários:', err);
+    res.status(500).json({ error: 'Erro ao buscar funcionários' });
+  }
+};
+
+
 // ========================
 // ATUALIZAR STATUS (Ativo/Inativo)
 // ========================
@@ -38,7 +74,7 @@ exports.atualizarStatusFuncionario = async (req, res) => {
 
   try {
     await db.query(
-      'UPDATE usuarios SET ativo = ? WHERE cadastro_funcionario_id_funcionario = ?',
+      'UPDATE usuarios SET ativo = ? WHERE id_usuario = ?',
       [ativo, id]
     );
     res.json({ message: 'Status atualizado com sucesso!' });
@@ -48,17 +84,28 @@ exports.atualizarStatusFuncionario = async (req, res) => {
   }
 };
 
+
+
 // CRIAR FUNCIONÁRIO + USUÁRIO AUTOMÁTICO (gera login e senha conforme pedido)
 exports.criarFuncionario = async (req, res) => {
-  const { nome, sobrenome, RG, CPF, celular, telefone, data_nascimento } = req.body;
+  const { endereco, complemento, bairro, nome, sobrenome, email, RG, CPF, celular, telefone, data_nascimento, funcao, ativo } = req.body;
 
   try {
+    const[resultado1] =  await db.query(
+      `INSERT INTO endereco (rua, numero, bairro, cidade, cep)
+      values (?, ?, ?, 'Aguaí', '13860001')`,
+      [endereco, complemento, bairro]
+    );
+
+    const idEndereco = resultado1.insertId;
+
+
     // 1) Inserir funcionário (inclui DATA_NASCIMENTO)
     const [resultado] = await db.query(
       `INSERT INTO cadastro_funcionario 
-        (nome, sobrenome, RG, CPF, celular, telefone, DATA_NASCIMENTO)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [nome, sobrenome, RG || null, CPF || null, celular || null, telefone || null, data_nascimento || '1990-12-31']
+        (nome, sobrenome, email, RG, CPF, celular, telefone, DATA_NASCIMENTO)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [nome, sobrenome, email || null, RG || null, CPF || null, celular || null, telefone || null, data_nascimento || '1900-01-01']
     );
 
     const idFuncionario = resultado.insertId;
@@ -105,14 +152,14 @@ exports.criarFuncionario = async (req, res) => {
     }
 
     // 5) Inserir usuário (perfil e endereco placeholders — ajuste se quiser pegar do form)
-    const perfil = 4;   // placeholder: ajuste para o id correto vindo do form se quiser
-    const endereco = 1; // placeholder: id de endereco padrão
+    const perfil = funcao;   // placeholder: ajuste para o id correto vindo do form se quiser
+  // placeholder: id de endereco padrão
 
     await db.query(
       `INSERT INTO usuarios 
         (login, senha, ativo, perfil_id_cargos, cadastro_funcionario_id_funcionario, endereco_id_endereco)
        VALUES (?, ?, ?, ?, ?, ?)`,
-      [login, senha, 1, perfil, idFuncionario, endereco]
+      [login, senha, 1, perfil, idFuncionario, idEndereco]
     );
 
     // 6) Responder com login/senha gerados
