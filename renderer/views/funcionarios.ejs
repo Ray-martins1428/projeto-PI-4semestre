@@ -10,42 +10,43 @@
 
 <body>
   <main class="container">
-    <%- include('partials/navbar') %>
+      <%- include('partials/navbar') %>
 
 
-      <section class="func-container">
-        <div class="func-content">
-          <h1>Gestão de Funcionario</h1>
+    <section class="func-container">
+      <div class="func-content">
+        <h1>Gestão de Funcionario</h1>
 
-          <div class="barra-pesquisa">
-            <img class="icone-pesquisa" src="/img/search-svgrepo-com.svg" alt="Ícone de Pesquisa">
-            <input type="text" id="campoPesquisa" placeholder="Nome funcionario...">
-            <img class="icone-enviar" src="/img/arrow-sm-right-svgrepo-com.svg" alt="Enviar Pesquisa">
+        <div class="barra-pesquisa">
+          <img class="icone-pesquisa" src="/img/search-svgrepo-com.svg" alt="Ícone de Pesquisa">
+
+          <input type="text" id="campoPesquisa" placeholder="Nome funcionario...">
+
+          <img class="icone-enviar" src="/img/arrow-sm-right-svgrepo-com.svg" alt="Enviar Pesquisa">
+        </div>
+        <div class="estq-card">
+          <div class="tabela-cabecalho">
+            <span class="coluna nome-func">NOME</span>
+            <span class="coluna funcao">FUNÇAO</span>
+            <span class="coluna status">STATUS</span>
+            <span class="coluna acoes"></span>
           </div>
-          
-          <div class="estq-card">
-            <div class="tabela-cabecalho">
-              <span class="coluna nome-func">NOME</span>
-              <span class="coluna funcao">FUNÇAO</span>
-              <span class="coluna status">STATUS</span>
-              <span class="coluna acoes"></span>
-            </div>
 
-            <div class="tabela-corpo" id="tabela-corpo">
-              <div class="tabela-linha">
-              </div>
+          <div class="tabela-corpo" id="tabela-corpo">
+            <div class="tabela-linha">
             </div>
+          </div>
 
-            <div class="botoes-globais">
-              <button class="btn-global registrar" onclick="window.location.href='/cria-func'">
-                Cadastrar funcionario
-              </button>
-            </div>
+          <div class="botoes-globais">
+            <button class="btn-global registrar" onclick="window.location.href='/cria-func'">
+              Cadastrar funcionario
+            </button>
           </div>
         </div>
+      </div>
 
 
-      </section>
+    </section>
 
 
   </main>

@@ -1,4 +1,3 @@
-// server/app.js
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -7,7 +6,11 @@ const session = require("express-session");
 const db = require("./config/db"); // Conexão com o banco
 const PORT = process.env.PORT || 4040;
 
-// importa rotas (verifique se esses arquivos existem)
+// Importa as rotas para produtos e histórico
+const produtoRoutes = require("./routes/api/produtosRoutes");
+const historicoRoutes = require("./routes/api/historicoRoutes");
+
+// Importa as rotas que você já tem
 const loginRoutes = require("./routes/api/loginRoutes");
 const funcionariosRoutes = require("./routes/api/funcionariosRoutes");
 const authRoutes = require("./routes/api/authRoutes");
@@ -26,39 +29,42 @@ app.use(session({
   }
 }));
 
-// expor session/usuario para as views EJS
+// Expõe session/usuario para as views EJS
 app.use((req, res, next) => {
   res.locals.usuario = req.session?.usuario || null;
   next();
 });
 
-// view engine / static / parsers
+// View engine / static / parsers
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../renderer/views"));
-app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// --- rotas API ---
-app.use("/api", loginRoutes);                   // /api/login  e /api/session
+// --- Rotas API ---
+app.use("/api", loginRoutes);                   // /api/login e /api/session
 app.use("/api/funcionarios", funcionariosRoutes); // /api/funcionarios/...
 app.use("/api/auth", authRoutes);               // /api/auth/logout
 
-// --- rotas EJS / páginas ---
+// --- Rotas EJS / Páginas ---
+app.use(produtoRoutes); // Rota para produtos
+app.use(historicoRoutes);    // Rota para histórico
 app.use(dashboardRoutes);
 
-// rota raiz (caso queira)
+
+// Rota raiz (caso queira)
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-// middleware de erro simples (opcional)
+// Middleware de erro simples (opcional)
 app.use((err, req, res, next) => {
   console.error("Erro no servidor:", err);
   res.status(500).send("Erro interno no servidor");
 });
 
-// iniciar o servidor
+// Iniciar o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
