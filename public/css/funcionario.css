@@ -1,18 +1,23 @@
 @import url(menu-aside.css);
 @import url(menu-aside-logado.css);
 
+/* ======= CONTAINER GERAL ======= */
 .func-container {
   background-color: #f0f6fc;
-  width: 100%;
-  margin-left: 220px;
-  min-height: 100vh;
+  margin-left: 220px;               /* espaço do menu lateral */
   padding: 40px 30px;
+  width: calc(100vw - 220px);       /* ocupa todo o espaço restante da tela */
+  min-height: 100vh;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
+/* ======= ÁREA INTERNA (AGORA EXPANDE 100% DA TELA) ======= */
 .func-content {
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;                      /* ocupa toda a largura disponível */
+  max-width: none;                  /* remove limitação de largura */
+  margin: 0;                        /* alinha à esquerda, sem centralizar */
+  box-sizing: border-box;
 }
 
 .func-content h1 {
@@ -21,16 +26,18 @@
   margin-bottom: 25px;
 }
 
-/* 🔍 Barra de pesquisa */
+/* ======= BARRA DE PESQUISA ======= */
 .barra-pesquisa {
   display: flex;
   align-items: center;
-  max-width: 600px;
+  width: 100%;
+  max-width: none;                 /* deixa ocupar todo o espaço */
   border: 2px solid #ccc;
   border-radius: 8px;
   background-color: #fff;
   padding: 5px 10px;
   margin-bottom: 25px;
+  box-sizing: border-box;
 }
 
 .icone-pesquisa,
@@ -56,17 +63,23 @@
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
 }
 
+/* ======= CARTÃO DA TABELA ======= */
 .estq-card {
   background-color: #f9f9f9;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;                     /* ocupa toda a largura disponível */
+  max-width: none;                 /* remove centralização / limite */
+  margin: 0;                       /* evita ficar "no meio" */
+  box-sizing: border-box;
 }
 
+/* ======= TABELA ======= */
 .tabela-cabecalho,
 .tabela-linha {
   display: grid;
-  grid-template-columns: 3fr 2fr 1fr 1fr;
+  grid-template-columns: 3fr 2fr 1fr 1fr; /* mantém layout original */
   align-items: center;
   padding: 12px 10px;
   gap: 10px;
@@ -95,6 +108,7 @@
   justify-content: flex-end;
 }
 
+/* ======= BOTÕES ======= */
 .btn-status {
   padding: 6px 12px;
   border: none;

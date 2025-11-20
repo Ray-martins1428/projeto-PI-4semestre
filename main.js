@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require("electron");
 const { spawn } = require("child_process");
 const path = require("path");
+const { ipcMain, dialog } = require("electron");
 
 let serverProcess = null;
 
@@ -26,7 +27,13 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1030,
     height: 780,
-    resizable: false,
+    // resizable: false,
+
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"),
+      contextIsolation: true,
+      nodeIntegration: false
+    }
   });
 
   // Carregar página inicial (Express)
@@ -35,12 +42,49 @@ function createWindow() {
 }
 
 app.whenReady().then(async () => {
-  await startServer();   // Aguarda o servidor iniciar
+  await startServer(); // Aguarda o servidor iniciar
   createWindow();
 
   app.on("will-quit", () => {
     if (serverProcess) {
       serverProcess.kill();
     }
+  });
+});
+
+ipcMain.handle("confirmacao-excluir", async (event, mensagem) => {
+  const result = await dialog.showMessageBox({
+    type: "question",
+    buttons: ["Sim", "Cancelar"],
+    defaultId: 0,
+    cancelId: 1,
+    message: mensagem,
+  });
+
+  return result.response === 0; // true = clicou em "Sim"
+});
+
+
+ipcMain.handle("aviso-alerta", async (event, mensagem) => {
+  await dialog.showMessageBox({
+    type: "info",
+    buttons: ["OK"],
+    message: mensagem,
+  });
+});
+
+ipcMain.handle("aviso-erro", async (event, mensagem) => {
+  await dialog.showMessageBox({
+    type: "error",
+    buttons: ["OK"],
+    message: mensagem,
+  });
+});
+
+ipcMain.handle("aviso-sucesso", async (event, mensagem) => {
+  await dialog.showMessageBox({
+    type: "info",
+    buttons: ["OK"],
+    message: mensagem,
   });
 });
