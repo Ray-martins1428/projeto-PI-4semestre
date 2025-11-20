@@ -2,77 +2,103 @@
 @import url(menu-aside-logado.css);
 
 .venda-container {
-    background-color: white;
-    width: 100%;
+    background-color: #f0f6fc;
+    width: calc(100% - 220px);
     margin-left: 220px;
     min-height: 100vh;
-    padding: 20px;
-}
-
-.venda-tela{
+    padding: 20px 30px;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 80%;
+    align-items: flex-start; 
 }
+.venda-tela {
+    width: 100%;
+    max-width: 1300px;
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+}
+
 
 #form-venda {
+    width: 100%;
+    max-width: 900px;
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    border: 1px solid #d0d8e0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
     display: flex;
     flex-direction: column;
-    width: 700px;
-    padding: 20px;
-    border: 1px solid var(--azul-ultra);
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+    overflow-y: visible;
 }
 
-#form-venda input{
-    padding: 8px;
+#form-venda label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #013d7c;
+}
+
+#form-venda input,
+#form-venda select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
     cursor: pointer;
+    background-color: #ffffff;
+    transition: border-color 0.2s;
 }
 
-#form-venda label{
-    margin-top: 10px;
+#form-venda input:focus,
+#form-venda select:focus {
+    border-color: var(--azul-ultra);
+    box-shadow: 0 0 4px rgba(0, 97, 162, 0.3);
 }
 
 #form-venda button {
-    width: 100%;
-    padding: 15px;
-    align-self: flex-start;
     background-color: var(--azul-ultra);
     color: white;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 6px;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    font-weight: 600;
 }
 
 #form-venda button:hover {
     background-color: var(--azul-hover);
 }
 
-.texto{
-    text-align: left;
+.texto {
     font-size: 28px;
-    font-weight: 500;
-    margin-bottom: 20px;
+    font-weight: 600;
     color: var(--azul-ultra);
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.metodo-pag {
+    display: flex;
+    gap: 25px;
+    margin-top: -5px;
 }
 
 .forma-pag input[type="radio"] {
-     transform: scale(1.3);
-     accent-color: black;
-}
-
-.metodo-pag{
-    display: flex;
-    gap: 20px;
-    margin-top: -15px;
-}
-
-select {
-    padding: 8px;
+    transform: scale(1.3);
+    accent-color: var(--azul-ultra);
     cursor: pointer;
-    font-size: 16px;
+}
+
+@media (min-width: 1600px) {
+    #form-venda {
+        max-width: 1100px;
+        padding: 40px;
+        margin-top: 100px;
+    }
 }

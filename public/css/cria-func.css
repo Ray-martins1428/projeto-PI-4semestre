@@ -1,122 +1,140 @@
 @import url(menu-aside.css);
 @import url(menu-aside-logado.css);
 
-
-body{
+body {
   overflow-y: hidden;
 }
 
+/* ===== CONTAINER PRINCIPAL ===== */
 .venda-container {
-  background-color: white;
-  width: 100%;
-  margin-left: 220px; /* espaço para o menu lateral */
-  min-height: 100vh;
-  padding: 20px;
+    background-color: #f0f6fc;
+    width: calc(100% - 220px);
+    margin-left: 220px;
+    min-height: 100vh;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
 }
 
-
+/* ===== ÁREA DO FORMULÁRIO ===== */
 .venda-tela {
+  width: 100%;
+  max-width: 1300px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 80%;
+  padding-top: 5px;
 }
 
 #form-venda {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  border: 1px solid #d0d8e0;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 690px;
-  padding: 30px;
-  border: 1px solid var(--azul-ultra);
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
 }
 
-
+/* ===== TÍTULO ===== */
 #form-venda h2 {
-  font-size: 26px;
+  font-size: 28px;
+  font-weight: 600;
   color: var(--azul-ultra);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   text-align: left;
 }
 
-
+/* ===== GRID DE INPUTS ===== */
 .input-texto {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
 
-/* Nome e Endereço ocupam linha inteira */
 #nome,
 #endereco {
   grid-column: span 2;
 }
 
-/* Inputs gerais */
+/* ===== LABELS ===== */
+#form-venda label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #013d7c;
+}
+
+/* ===== INPUTS ===== */
 .input-texto input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 16px;
-  transition: border-color 0.3s;
+  font-size: 15px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .input-texto input:focus {
   border-color: var(--azul-ultra);
+  box-shadow: 0 0 4px rgba(0, 97, 162, 0.3);
   outline: none;
 }
 
-
-
-
-
+/* ===== RADIOS ===== */
 .grupo-radios {
   display: flex;
-  gap: 30px;
+  gap: 25px;
   flex-wrap: wrap;
-  margin-top: 10px;
+  margin-top: 5px;
 }
-
 
 .grupo-radios div {
   display: flex;
   align-items: center;
-  flex-direction: row;
   gap: 8px;
 }
 
 .grupo-radios input[type="radio"] {
-  transform: scale(1.2);
+  transform: scale(1.3);
   accent-color: var(--azul-ultra);
   cursor: pointer;
 }
 
-
+/* ===== MENSAGEM DE ERRO ===== */
 .mensagem-erro {
   color: red;
   font-size: 15px;
   text-align: center;
-  margin-top: 5px;
+  margin-top: -5px;
 }
 
+/* ===== BOTÃO PADRÃO ===== */
 .btn-cadastrar {
-  width: 100%;
-  padding: 15px;
   background-color: var(--azul-ultra);
   color: white;
+  padding: 14px;
   font-size: 16px;
-  font-weight: 500;
-  border: none;
   border-radius: 6px;
+  border: none;
   cursor: pointer;
   margin-top: 10px;
+  font-weight: 600;
   transition: background-color 0.3s;
 }
 
 .btn-cadastrar:hover {
   background-color: var(--azul-hover);
+}
+
+/* ===== RESPONSIVIDADE EXTRA ===== */
+@media (min-width: 1600px) {
+  #form-venda {
+    max-width: 1100px;
+    padding: 40px;
+    margin-top: 100px;
+  }
 }
