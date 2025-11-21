@@ -14,7 +14,8 @@ const historicoRoutes = require("./routes/api/historicoRoutes");
 const loginRoutes = require("./routes/api/loginRoutes");
 const funcionariosRoutes = require("./routes/api/funcionariosRoutes");
 const authRoutes = require("./routes/api/authRoutes");
-const dashboardRoutes = require("./routes/routes");
+const dashboardRoutes = require("./routes/api/dashboardRoutes");
+
 
 // --- SESSÃO ---
 app.use(session({
@@ -46,6 +47,7 @@ app.use(express.json());
 app.use("/api", loginRoutes);                   // /api/login e /api/session
 app.use("/api/funcionarios", funcionariosRoutes); // /api/funcionarios/...
 app.use("/api/auth", authRoutes);               // /api/auth/logout
+app.use("/api/dashboard", dashboardRoutes);
 
 // --- Rotas EJS / Páginas ---
 app.use(produtoRoutes); // Rota para produtos
