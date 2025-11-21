@@ -1,72 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Gonçalves</title>
-
   <link rel="stylesheet" href="/css/dashboard.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-    <%- include('partials/navbar') %>
+  <%- include('partials/navbar') %>
 
+    <main class="container">
+      <section class="dash-container">
+        <div class="container-content">
 
-  <main class="container">
-    <section class="dash-container">
-      <div class="container-content">
-        <div class="dash-cards">
-          <div class="dash-card">
-            <h3>Vendas de Gás</h3>
-            <p>Qtd: 120</p>
+          <!-- CARTÕES -->
+          <div class="dash-cards">
+            <div class="dash-card">
+              <h3>Total de Vendas</h3>
+              <p id="cartTotalVendas">0</p>
+            </div>
+            <div class="dash-card">
+              <h3>Faturamento</h3>
+              <p id="cartFaturamento">R$ 0,00</p>
+            </div>
+            <div class="dash-card">
+              <h3>Custo</h3>
+              <p id="cartCusto">R$ 0,00</p>
+            </div>
+            <div class="dash-card">
+              <h3>Lucro</h3>
+              <p id="cartLucro">R$ 0,00</p>
+            </div>
           </div>
-          <div class="dash-card">
-            <h3>Vendas de Água</h3>
-            <p>Qtd: 80</p>
+
+          <!-- FILTROS -->
+          <div class="filtros-dashboard">
+            <input type="number" id="filtroAno" placeholder="Ano" />
+            <input type="number" id="filtroMes" placeholder="Mês" min="1" max="12" />
+            <input type="number" id="filtroDia" placeholder="Dia" min="1" max="31" />
+            <button id="btnAplicarFiltros">Aplicar Filtros</button>
           </div>
-          <div class="dash-card">
-            <h3>Valor Total de Vendas</h3>
-            <p>R$ 5.400,00</p>
+
+          <!-- GRÁFICO -->
+          <div style="margin-top: 30px;">
+            <h2>Vendas Mensais</h2>
+            <canvas id="vendasMensais" width="600" height="250"></canvas>
           </div>
+
+          <!-- TABELA DE VENDAS -->
+          <div style="margin-top: 30px;">
+            <h2>Vendas Recentes</h2>
+            <table id="tabelaVendasRecentes">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Produto</th>
+                  <th>Qtd</th>
+                  <th>Valor (R$)</th>
+                  <th>Usuário</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
         </div>
+      </section>
+    </main>
 
-        <div style="margin-top: 30px;">
-          <h2>Vendas Mensais</h2>
-          <canvas id="vendasMensais" width="600" height="250"></canvas>
-        </div>
-
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const ctx = document.getElementById('vendasMensais').getContext('2d');
-    const vendasMensaisChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Fev', 'Mar', 'Abr'],
-        datasets: [{
-          label: 'Vendas (%)',
-          data: [80, 55, 95, 40],
-          backgroundColor: ['#0061A2', '#007bff', '#3399ff', '#66b2ff'],
-          borderWidth: 1,
-          borderRadius: 6
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: { beginAtZero: true, max: 100 }
-        }
-      }
-    });
-  </script>
+    <script src="/js/dashboard.js"></script>
 </body>
 
 </html>
