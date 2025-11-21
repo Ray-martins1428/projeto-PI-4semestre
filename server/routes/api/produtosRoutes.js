@@ -7,5 +7,7 @@ router.get("/estoque", produtoController.listarProdutos);
 router.post("/produto", produtoController.cadastrarProduto);
 router.put("/produto/:id", produtoController.atualizarProduto);
 router.delete("/produto/:id", produtoController.deletarProduto);
+router.post("/produto/adicionar-estoque/:id", produtoController.adicionarEstoque);
+
 
 module.exports = router;

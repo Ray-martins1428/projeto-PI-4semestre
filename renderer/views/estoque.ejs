@@ -17,11 +17,10 @@
 
         <div class="estq-card">
 
-          <!-- Cabeçalho -->
           <div class="tabela-cabecalho">
             <span class="coluna nome-prod">NOME</span>
             <span class="coluna tipo">VOLUME</span>
-            <span class="coluna quantidade">QTD</span>
+            <span class="coluna quantidade">QUANTIDADE</span>
             <span class="coluna valor">VALOR</span>
             <span class="coluna acoes"></span>
           </div>
@@ -35,11 +34,15 @@
                 <div class="tabela-linha">
                   <span class="coluna nome-prod"><%= p.nome %></span>
                   <span class="coluna tipo"><%= p.volume %></span>
-                  <span class="coluna quantidade"><%= p.estoque_saldo %></span>
+
+                  <span class="coluna quantidade">
+                    <%= p.estoque_saldo %>
+                    <button class="btn-add-estoque" data-id="<%= p.id_produtos %>">+</button>
+                  </span>
+
                   <span class="coluna valor">R$ <%= p.valor %></span>
 
                   <span class="coluna acoes">
-
                     <button class="btn-acao editar"
                       onclick="abrirEditar(
                         <%= p.id_produtos %>,
@@ -90,14 +93,26 @@
       <div class="modal" id="modalEditar">
         <div class="modal-content">
           <span class="close" id="closeEditar">&times;</span>
-          <h2>Editar Produto</h2>
+          <h2>Editar Preço do Produto</h2>
 
-          <input type="number" id="editQuantidade" placeholder="Quantidade">
           <input type="number" id="editPreco" placeholder="Preço">
 
           <button class="btn-cadastrar" id="salvarEdicao">Salvar</button>
         </div>
       </div>
+
+      <!-- MODAL ADICIONAR ESTOQUE -->
+      <div class="modal" id="modalAddEstoque">
+        <div class="modal-content">
+          <span class="close" id="closeAddEstoque">&times;</span>
+          <h2>Adicionar ao Estoque</h2>
+
+          <input type="number" id="quantAdd" placeholder="Quantidade para adicionar">
+
+          <button class="btn-cadastrar" id="salvarAddEstoque">Adicionar</button>
+        </div>
+      </div>
+
 
       <script src="/js/estoque.js"></script>
     </section>

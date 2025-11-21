@@ -1,8 +1,7 @@
 const db = require('../config/db');
 
-// --------------------------
-// LISTAR PRODUTOS
-// --------------------------
+
+// LISTAR PRODUTOS-----LISTAR PRODUTOS-----LISTAR PRODUTOS-----LISTAR PRODUTOS-----LISTAR PRODUTOS-----LISTAR PRODUTOS-----
 exports.listarProdutos = async (req, res) => {
   try {
     const [produtos] = await db.execute("SELECT * FROM produtos");
@@ -13,9 +12,9 @@ exports.listarProdutos = async (req, res) => {
   }
 };
 
-// --------------------------
-// CADASTRAR PRODUTO
-// --------------------------
+
+// CADASTRAR PRODUTO-----CADASTRAR PRODUTO-----CADASTRAR PRODUTO-----CADASTRAR PRODUTO-----CADASTRAR PRODUTO-----CADASTRAR PRODUTO-----
+
 exports.cadastrarProduto = async (req, res) => {
   const { nome, volume, valor, estoque_saldo } = req.body;
 
@@ -37,33 +36,17 @@ exports.cadastrarProduto = async (req, res) => {
   }
 };
 
-// --------------------------
-// ATUALIZAR PRODUTO
-// --------------------------
+
+// ATUALIZAR PRODUTO-----ATUALIZAR PRODUTO-----ATUALIZAR PRODUTO-----ATUALIZAR PRODUTO-----ATUALIZAR PRODUTO-----ATUALIZAR PRODUTO-----
+
 exports.atualizarProduto = async (req, res) => {
   const { id } = req.params;
-  const { nome, volume, valor, estoque_saldo } = req.body;
+  const { valor } = req.body;
 
   try {
-    // Buscar o produto atual
-    const [[produtoAtual]] = await db.execute(
-      "SELECT * FROM produtos WHERE id_produtos=?",
-      [id]
-    );
-
-    if (!produtoAtual) {
-      return res.status(404).json({ error: "Produto não encontrado" });
-    }
-
-    // Usar o valor existente quando o campo não foi enviado
-    const novoNome = nome ?? produtoAtual.nome;
-    const novoVolume = volume ?? produtoAtual.volume;
-    const novoValor = valor ?? produtoAtual.valor;
-    const novoSaldo = estoque_saldo ?? produtoAtual.estoque_saldo;
-
     await db.execute(
-      "UPDATE produtos SET nome=?, volume=?, valor=?, estoque_saldo=? WHERE id_produtos=?",
-      [novoNome, novoVolume, novoValor, novoSaldo, id]
+      "UPDATE produtos SET valor=? WHERE id_produtos=?",
+      [valor, id]
     );
 
     res.status(200).json({ message: "Produto atualizado" });
@@ -74,9 +57,9 @@ exports.atualizarProduto = async (req, res) => {
   }
 };
 
-// --------------------------
-// DELETAR PRODUTO
-// --------------------------
+
+// DELETAR PRODUTO-----DELETAR PRODUTO-----DELETAR PRODUTO-----DELETAR PRODUTO-----DELETAR PRODUTO-----DELETAR PRODUTO-----
+
 exports.deletarProduto = async (req, res) => {
   const { id } = req.params;
 
@@ -87,5 +70,48 @@ exports.deletarProduto = async (req, res) => {
   } catch (err) {
     console.error("Erro ao deletar produto:", err);
     res.status(500).send("Erro ao deletar produto");
+  }
+};
+
+
+// ADICIONAR ESTOQUE-----ADICIONAR ESTOQUE-----ADICIONAR ESTOQUE-----ADICIONAR ESTOQUE-----ADICIONAR ESTOQUE-----ADICIONAR ESTOQUE-----
+
+exports.adicionarEstoque = async (req, res) => {
+  const { id } = req.params;
+  const { quantidade } = req.body;
+
+  try {
+    const [rows] = await db.execute(
+      "SELECT estoque_saldo FROM produtos WHERE id_produtos=?",
+      [id]
+    );
+
+    if (rows.length === 0) {
+      console.log("Produto não encontrado!");
+      return res.status(404).json({ message: "Produto não encontrado" });
+    }
+
+    const estoqueAtual = Number(rows[0].estoque_saldo);
+    const qtdAdd = Number(quantidade);
+
+    if (isNaN(estoqueAtual) || isNaN(qtdAdd)) {
+      return res.status(400).json({ message: "Valor inválido" });
+    }
+
+    const novoEstoque = estoqueAtual + qtdAdd;
+
+    await db.execute(
+      "UPDATE produtos SET estoque_saldo=? WHERE id_produtos=?",
+      [novoEstoque, id]
+    );
+
+    res.status(200).json({
+      message: "Estoque atualizado com sucesso",
+      novoEstoque
+    });
+
+  } catch (err) {
+    console.error("Erro ao adicionar estoque:", err);
+    res.status(500).send("Erro ao adicionar estoque");
   }
 };
