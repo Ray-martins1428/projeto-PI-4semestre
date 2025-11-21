@@ -51,7 +51,7 @@
                         <%= p.estoque_saldo %>,
                         <%= p.valor %>
                       )">
-                      E
+                      $
                     </button>
 
                     <button class="btn-acao lixeira" onclick="deletar(<%= p.id_produtos %>)">X</button>
@@ -68,7 +68,7 @@
 
           <div class="botoes-globais">
             <button class="btn-global registrar" id="abrirModal">Registrar Produto</button>
-            <button class="btn-global historico" onclick="window.location.href='/api/historico'">Acessar Histórico</button>
+            <button class="btn-global historico" onclick="window.location.href='/historico'">Acessar Histórico</button>
           </div>
 
         </div>
