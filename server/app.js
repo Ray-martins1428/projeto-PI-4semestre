@@ -5,6 +5,7 @@ require("dotenv").config();
 const session = require("express-session");
 const db = require("./config/db"); // Conexão com o banco
 const PORT = process.env.PORT || 4040;
+const pageRoute = require('./routes/routes');
 
 // Importa as rotas para produtos e histórico
 const produtoRoutes = require("./routes/api/produtosRoutes");
@@ -53,6 +54,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use(produtoRoutes); // Rota para produtos
 app.use(historicoRoutes);    // Rota para histórico
 app.use(dashboardRoutes);
+app.use('/', pageRoute);
 
 
 // Rota raiz (caso queira)
