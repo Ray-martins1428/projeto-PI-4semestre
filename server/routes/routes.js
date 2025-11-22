@@ -36,4 +36,8 @@ router.get('/cria-func', (req, res) => {
   res.render('cria-func');
 });
 
+router.get('/historico', (req, res) => {
+    res.render('historico');
+})
+
 module.exports = router;

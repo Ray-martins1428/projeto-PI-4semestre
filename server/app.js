@@ -48,11 +48,12 @@ app.use(express.json());
 app.use("/api", loginRoutes);                   // /api/login e /api/session
 app.use("/api/funcionarios", funcionariosRoutes); // /api/funcionarios/...
 app.use("/api/auth", authRoutes);               // /api/auth/logout
-app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/dashboard", dashboardRoutes); // dashboar
+app.use("/api/historico", historicoRoutes); // historico
+
 
 // --- Rotas EJS / Páginas ---
 app.use(produtoRoutes); // Rota para produtos
-app.use(historicoRoutes);    // Rota para histórico
 app.use(dashboardRoutes);
 app.use('/', pageRoute);
 

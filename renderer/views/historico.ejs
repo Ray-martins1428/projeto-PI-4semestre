@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/funcionario.css">
+  <title>Histórico de Produtos</title>
+</head>
+
+<body>
+  <main class="container">
+    <%- include('partials/navbar') %>
+
+    <section class="func-container">
+      <div class="func-content">
+
+        <!-- Barra de Pesquisa -->
+        <div class="barra-pesquisa">
+          <img class="icone-pesquisa" src="/img/search-svgrepo-com.svg" alt="Ícone de Pesquisa">
+
+          <input type="text" id="campoBusca" placeholder="Nome do produto...">
+
+          <img class="icone-enviar" src="/img/arrow-sm-right-svgrepo-com.svg" alt="Enviar Pesquisa">
+        </div>
+
+        <!-- CARD DO HISTÓRICO -->
+        <div class="estq-card">
+
+          <!-- CABEÇALHO DA TABELA -->
+          <div class="tabela-cabecalho">
+            <span class="coluna nome-prod">NOME DO PRODUTO</span>
+            <span class="coluna tipo-mov">TIPO</span>
+            <span class="coluna quantia">QUANTIDADE</span>
+            <span class="coluna data">DATA</span>
+          </div>
+
+          <!-- CORPO DA TABELA -->
+          <div class="tabela-corpo" id="tabela-corpo">
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/historico.js"></script>
+
+</body>
+
+</html>
