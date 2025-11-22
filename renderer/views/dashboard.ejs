@@ -1,77 +1,109 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Gonçalves</title>
-  <link rel="stylesheet" href="/css/dashboard.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Ultragaz</title>
+
+  <link rel="stylesheet" href="/css/dashboard.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-  <%- include('partials/navbar') %>
 
-    <main class="container">
+  <main class="container">
+
+    <%- include('partials/navbar') %>
+
       <section class="dash-container">
         <div class="container-content">
 
-          <!-- CARTÕES -->
-          <div class="dash-cards">
-            <div class="dash-card">
-              <h3>Total de Vendas</h3>
-              <p id="cartTotalVendas">0</p>
-            </div>
-            <div class="dash-card">
-              <h3>Faturamento</h3>
-              <p id="cartFaturamento">R$ 0,00</p>
-            </div>
-            <div class="dash-card">
-              <h3>Custo</h3>
-              <p id="cartCusto">R$ 0,00</p>
-            </div>
-            <div class="dash-card">
-              <h3>Lucro</h3>
-              <p id="cartLucro">R$ 0,00</p>
-            </div>
-          </div>
+          <h1>Dashboard</h1>
 
           <!-- FILTROS -->
-          <div class="filtros-dashboard">
-            <input type="number" id="filtroAno" placeholder="Ano" />
-            <input type="number" id="filtroMes" placeholder="Mês" min="1" max="12" />
-            <input type="number" id="filtroDia" placeholder="Dia" min="1" max="31" />
-            <button id="btnAplicarFiltros">Aplicar Filtros</button>
+          <div class="dash-filtros">
+            <label>De: <input type="date" id="startDate"></label>
+            <label>Até: <input type="date" id="endDate"></label>
+            <button id="btnAplicarFiltros">Aplicar</button>
+            <button id="btnHoje">Hoje</button>
           </div>
 
-          <!-- GRÁFICO -->
-          <div style="margin-top: 30px;">
-            <h2>Vendas Mensais</h2>
-            <canvas id="vendasMensais" width="600" height="250"></canvas>
+          <!-- CARDS -->
+          <!-- CARDS -->
+          <div class="dash-cards">
+
+            <div class="dash-card">
+              <h3>Itens Vendidos</h3>
+              <p id="card-itens">0</p>
+            </div>
+
+            <div class="dash-card">
+              <h3>Faturamento (R$)</h3>
+              <p id="card-faturamento">0.00</p>
+            </div>
+
+            <div class="dash-card">
+              <h3>Lucro (R$)</h3>
+              <p id="card-lucro">0.00</p>
+            </div>
+
           </div>
 
-          <!-- TABELA DE VENDAS -->
-          <div style="margin-top: 30px;">
-            <h2>Vendas Recentes</h2>
-            <table id="tabelaVendasRecentes">
-              <thead>
-                <tr>
-                  <th>Data</th>
-                  <th>Produto</th>
-                  <th>Qtd</th>
-                  <th>Valor (R$)</th>
-                  <th>Usuário</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+          <!-- GRÁFICOS -->
+          <div class="dash-graficos">
+            <div>
+              <h3>Faturamento Diário</h3>
+              <canvas id="chartLinha"></canvas>
+            </div>
+
+            <div>
+              <h3>Faturamento Comparativo</h3>
+              <canvas id="chartBarra"></canvas>
+            </div>
+
+            <div>
+              <h3>Produtos Mais Vendidos</h3>
+              <canvas id="chartPizza"></canvas>
+            </div>
           </div>
+
+          <!-- BOTÃO DE PDF -->
+          <div style="margin-top: 25px;">
+            <button id="btnPDF" style="
+            padding: 10px 20px;
+            background: #0061A2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;">
+              Gerar PDF
+            </button>
+          </div>
+
+          <!-- TABELA -->
+          <h2 style="margin-top:30px;">Últimas Vendas</h2>
+
+          <table class="tabela-dash">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Data</th>
+                <th>Produto</th>
+                <th>Qtd</th>
+                <th>Valor Unit.</th>
+                <th>Total (R$)</th>
+              </tr>
+            </thead>
+            <tbody id="ultimas-vendas-body"></tbody>
+          </table>
 
         </div>
       </section>
-    </main>
 
-    <script src="/js/dashboard.js"></script>
+  </main>
+
+  <script src="/js/dashboard.js"></script>
 </body>
 
 </html>

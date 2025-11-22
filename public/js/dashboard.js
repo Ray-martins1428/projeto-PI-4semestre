@@ -1,113 +1,103 @@
-let chartVendas;
+document.addEventListener("DOMContentLoaded", () => {
 
-// Formatar data DD/MM/YYYY
-function formatarData(dataISO) {
-    const d = new Date(dataISO);
-    const dia = String(d.getDate()).padStart(2, '0');
-    const mes = String(d.getMonth() + 1).padStart(2, '0');
-    const ano = d.getFullYear();
-    return `${dia}/${mes}/${ano}`;
-}
+    const startDate = document.getElementById("startDate");
+    const endDate = document.getElementById("endDate");
+    const btnAplicar = document.getElementById("btnAplicarFiltros");
+    const btnHoje = document.getElementById("btnHoje");
+    const btnPDF = document.getElementById("btnPDF");
 
-// Carregar resumo (cartões)
-async function carregarResumo(filtros = {}) {
-    try {
-        const res = await fetch('/api/dashboard/resumo?' + new URLSearchParams(filtros));
-        const data = await res.json();
+    // CARDS (ATUALIZADO)
+    const cardItens = document.getElementById("card-itens");
+    const cardFaturamento = document.getElementById("card-faturamento");
+    const cardLucro = document.getElementById("card-lucro");
 
-        document.getElementById('cartTotalVendas').innerText = data.totalVendas;
-        document.getElementById('cartFaturamento').innerText = 'R$ ' + data.faturamento.toFixed(2);
-        document.getElementById('cartCusto').innerText = 'R$ ' + data.custo.toFixed(2);
-        document.getElementById('cartLucro').innerText = 'R$ ' + data.lucro.toFixed(2);
-    } catch (err) {
-        console.error(err);
-    }
-}
+    const tbody = document.getElementById("ultimas-vendas-body");
 
-// Carregar gráfico de vendas
-async function carregarGrafico(filtros = {}) {
-    try {
-        const res = await fetch('/api/dashboard/vendas?' + new URLSearchParams(filtros));
-        const dados = await res.json();
+    let chartLinha = null;
+    let chartBarra = null;
+    let chartPizza = null;
 
-        const vendasPorData = {};
-        dados.forEach(v => {
-            const data = formatarData(v.data_venda);
-            if (!vendasPorData[data]) vendasPorData[data] = 0;
-            vendasPorData[data] += Number(v.vlr_total);
-        });
+    const ctxLinha = document.getElementById("chartLinha").getContext("2d");
+    const ctxBarra = document.getElementById("chartBarra").getContext("2d");
+    const ctxPizza = document.getElementById("chartPizza").getContext("2d");
 
-        const labels = Object.keys(vendasPorData);
-        const values = Object.values(vendasPorData);
+    const br = n => Number(n).toLocaleString("pt-BR", { minimumFractionDigits: 2 });
 
-        const ctx = document.getElementById('vendasMensais').getContext('2d');
-        if (chartVendas) chartVendas.destroy();
+    async function carregar(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        const response = await fetch(`/api/dashboard/summary?${query}`);
 
-        chartVendas = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels,
-                datasets: [{
-                    label: 'Vendas (R$)',
-                    data: values,
-                    backgroundColor: '#0061A2',
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true } }
-            }
-        });
+        if (!response.ok) return;
 
-    } catch (err) {
-        console.error(err);
-    }
-}
+        const data = await response.json();
 
-// Carregar tabela de vendas recentes
-async function carregarTabela(filtros = {}) {
-    try {
-        const res = await fetch('/api/dashboard/vendas?' + new URLSearchParams(filtros));
-        const dados = await res.json();
+        // ===== CARDS (ATUALIZADO) =====
+        cardItens.textContent = data.items_sold;
+        cardFaturamento.textContent = br(data.faturamento);
+        cardLucro.textContent = br(data.lucro);
 
-        const tbody = document.getElementById('tabelaVendasRecentes').querySelector('tbody');
-        tbody.innerHTML = '';
-
-        dados.forEach(v => {
-            const tr = document.createElement('tr');
+        // ===== TABELA =====
+        tbody.innerHTML = "";
+        data.latestSales.forEach(v => {
+            const tr = document.createElement("tr");
             tr.innerHTML = `
-        <td>${formatarData(v.data_venda)}</td>
-        <td>${v.produto}</td>
-        <td>${v.qtd}</td>
-        <td>R$ ${Number(v.vlr_total).toFixed(2)}</td>
-        <td>${v.usuario}</td>
-      `;
+                <td>${v.id_vendas}</td>
+                <td>${v.data_venda}</td>
+                <td>${v.produto_nome}</td>
+                <td>${v.qtd}</td>
+                <td>R$ ${br(v.valor_unitario)}</td>
+                <td>R$ ${br(v.vlr_total)}</td>
+            `;
             tbody.appendChild(tr);
         });
 
-    } catch (err) {
-        console.error(err);
+        // ===== GRÁFICO LINHA =====
+        const labels = data.chart.map(d => d.dia);
+        const valores = data.chart.map(d => d.faturamento);
+
+        if (chartLinha) chartLinha.destroy();
+        chartLinha = new Chart(ctxLinha, {
+            type: "line",
+            data: { labels, datasets: [{ data: valores, borderWidth: 3 }] }
+        });
+
+        // ===== GRÁFICO BARRA =====
+        if (chartBarra) chartBarra.destroy();
+        chartBarra = new Chart(ctxBarra, {
+            type: "bar",
+            data: { labels, datasets: [{ data: valores }] }
+        });
+
+        // ===== GRÁFICO PIZZA =====
+        if (chartPizza) chartPizza.destroy();
+        chartPizza = new Chart(ctxPizza, {
+            type: "pie",
+            data: {
+                labels: data.produtosVendidos.map(p => p.produto),
+                datasets: [{ data: data.produtosVendidos.map(p => p.total) }]
+            }
+        });
     }
-}
 
-// Aplicar filtros
-document.getElementById('btnAplicarFiltros').addEventListener('click', () => {
-    const filtros = {
-        ano: document.getElementById('filtroAno').value,
-        mes: document.getElementById('filtroMes').value,
-        dia: document.getElementById('filtroDia').value
-    };
+    // FILTROS
+    btnAplicar.addEventListener("click", () => {
+        carregar({ start: startDate.value, end: endDate.value });
+    });
 
-    carregarResumo(filtros);
-    carregarGrafico(filtros);
-    carregarTabela(filtros);
-});
+    btnHoje.addEventListener("click", () => {
+        const hoje = new Date().toISOString().split("T")[0];
+        startDate.value = hoje;
+        endDate.value = hoje;
+        carregar({ start: hoje, end: hoje });
+    });
 
-// Carregar inicial
-document.addEventListener('DOMContentLoaded', () => {
-    carregarResumo();
-    carregarGrafico();
-    carregarTabela();
+    // PDF
+    btnPDF.addEventListener("click", () => {
+        const start = startDate.value || "";
+        const end = endDate.value || "";
+
+        window.open(`/api/dashboard/pdf?start=${start}&end=${end}`, "_blank");
+    });
+
+    carregar({});
 });
