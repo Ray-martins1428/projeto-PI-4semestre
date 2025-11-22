@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const bcrypt = require('bcrypt')
 
 // ========================
 // LISTAR FUNCIONÁRIOS
@@ -19,7 +20,7 @@ exports.listarFuncionarios = async (req, res) => {
       FROM cadastro_funcionario f
       LEFT JOIN usuarios u ON f.id_funcionario = u.cadastro_funcionario_id_funcionario
       LEFT JOIN perfil p ON u.perfil_id_cargos = p.id_cargos
-      WHERE p.nome <> 'ADMINISTRADOR'
+      WHERE p.id_cargos not in (1,2)
       ORDER BY f.id_funcionario;
     `);
     res.json(rows);
@@ -195,11 +196,15 @@ exports.criarFuncionario = async (req, res) => {
     const perfil = funcao;   // placeholder: ajuste para o id correto vindo do form se quiser
     // placeholder: id de endereco padrão
 
+    // criptografia de senha aqui
+    const saltRounds = 12
+    const senhaCriptografada = await bcrypt.hash(senha, saltRounds)
+
     await db.query(
       `INSERT INTO usuarios 
         (login, senha, ativo, perfil_id_cargos, cadastro_funcionario_id_funcionario, endereco_id_endereco)
        VALUES (?, ?, ?, ?, ?, ?)`,
-      [login, senha, 1, perfil, idFuncionario, idEndereco]
+      [login, senhaCriptografada, 1, perfil, idFuncionario, idEndereco]
     );
 
     // 6) Responder com login/senha gerados
