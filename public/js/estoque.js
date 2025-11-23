@@ -156,9 +156,15 @@ fecharModalAdd.addEventListener("click", () => {
 // =========================
 btnSalvarAdd.onclick = async () => {
   const quantidade = inputQuantAdd.value.trim();
+  const preco_custo = document.getElementById("precoCustoAdd").value.trim();
 
   if (!quantidade || isNaN(quantidade)) {
     alert("Digite uma quantidade válida");
+    return;
+  }
+
+  if (!preco_custo || isNaN(preco_custo) || preco_custo <= 0) {
+    alert("Digite um preço de custo válido");
     return;
   }
 
@@ -169,30 +175,23 @@ btnSalvarAdd.onclick = async () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id_produto: idProdutoAdicionando,
-          quantidade: Number(quantidade)
+          quantidade: Number(quantidade),
+          preco_custo: Number(preco_custo)
         }),
       }
     );
 
-    let data = null;
-    try {
-      data = await response.json();
-    } catch (err) {
-      alert("Erro ao adicionar estoque");
-      return;
-    }
+    const data = await response.json();
 
     if (response.ok) {
       alert("Estoque atualizado!");
       modalAddEstoque.style.display = "none";
-      document.body.classList.remove("modal-open");
-      inputQuantAdd.value = "";
       location.reload();
     } else {
-      alert("Erro ao adicionar estoque: " + data.message);
+      alert("Erro ao adicionar estoque: " + data.erro);
     }
   } catch (error) {
     console.error("Erro ao enviar estoque:", error);
   }
 };
+

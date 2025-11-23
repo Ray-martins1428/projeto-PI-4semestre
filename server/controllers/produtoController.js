@@ -72,14 +72,22 @@ exports.deletarProduto = async (req, res) => {
 exports.adicionarEstoque = async (req, res) => {
     try {
         const id_produto = req.params.id;
-        const { quantidade } = req.body;
+        const { quantidade, preco_custo } = req.body;
 
         if (!quantidade || quantidade <= 0) {
             return res.status(400).json({ erro: "Quantidade inválida!" });
         }
 
-        const sql = "CALL entrada_estoque(?, ?)"; 
-        const valores = [id_produto, quantidade];
+        if (!preco_custo || preco_custo <= 0) {
+            return res.status(400).json({ erro: "Preço de custo inválido!" });
+        }
+
+        const sql = `
+            INSERT INTO compras (data_compra, qtd, preco_custo, produtos_id_produtos)
+            VALUES (CURDATE(), ?, ?, ?)
+        `;
+
+        const valores = [quantidade, preco_custo, id_produto];
 
         await db.execute(sql, valores);
 
@@ -90,6 +98,8 @@ exports.adicionarEstoque = async (req, res) => {
         res.status(500).json({ erro: "Erro interno ao adicionar estoque." });
     }
 };
+
+
 
 
 // Função interna para uso nas páginas EJS
