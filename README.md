@@ -1,5 +1,4 @@
-# projeto-PI-4semestre
-Sistema Operacional Ultragaz
+# Sistema Operacional Ultragaz
 
 descrição:
 O Sistema Operacional Ultragaz tem como objetivo integrar tecnologia de forma simples e eficiente à empresa Ultragaz, substituindo métodos ultrapassados de registro de dados de vendas e controle de estoque. Com essa modernização, buscamos otimizar processos e melhorar a gestão das informações, proporcionando um ambiente mais ágil e produtivo.
