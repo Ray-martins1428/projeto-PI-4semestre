@@ -81,37 +81,21 @@ exports.adicionarEstoque = async (req, res) => {
   const { quantidade } = req.body;
 
   try {
-    const [rows] = await db.execute(
-      "SELECT estoque_saldo FROM produtos WHERE id_produtos=?",
-      [id]
-    );
-
-    if (rows.length === 0) {
-      console.log("Produto não encontrado!");
-      return res.status(404).json({ message: "Produto não encontrado" });
+    if (!quantidade || isNaN(Number(quantidade))) {
+      return res.status(400).json({ message: "Quantidade inválida" });
     }
 
-    const estoqueAtual = Number(rows[0].estoque_saldo);
-    const qtdAdd = Number(quantidade);
-
-    if (isNaN(estoqueAtual) || isNaN(qtdAdd)) {
-      return res.status(400).json({ message: "Valor inválido" });
-    }
-
-    const novoEstoque = estoqueAtual + qtdAdd;
-
-    await db.execute(
-      "UPDATE produtos SET estoque_saldo=? WHERE id_produtos=?",
-      [novoEstoque, id]
-    );
+    // Chamada da procedure
+    await db.execute("CALL entrada_estoque(?, ?)", [id, quantidade]);
 
     res.status(200).json({
-      message: "Estoque atualizado com sucesso",
-      novoEstoque
+      message: "Estoque atualizado com sucesso via procedure",
+      id_produto: id,
+      quantidade_adicionada: quantidade
     });
 
   } catch (err) {
-    console.error("Erro ao adicionar estoque:", err);
+    console.error("Erro ao adicionar estoque via procedure:", err);
     res.status(500).send("Erro ao adicionar estoque");
   }
 };

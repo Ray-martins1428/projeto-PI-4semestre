@@ -21,6 +21,7 @@ const loginRoutes = require("./routes/api/loginRoutes");
 const funcionariosRoutes = require("./routes/api/funcionariosRoutes");
 const authRoutes = require("./routes/api/authRoutes");
 const dashboardRoutes = require("./routes/api/dashboardRoutes");
+const vendasRoutes = require("./routes/api/vendasRoutes");
 
 // ==========================
 //  SESSÃO
@@ -63,6 +64,7 @@ app.use("/api/funcionarios", funcionariosRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/historico", historicoRoutes);
+app.use("/api/vendas", vendasRoutes);
 
 // ==========================
 //  ROTAS DE PÁGINAS
