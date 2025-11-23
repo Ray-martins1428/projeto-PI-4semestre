@@ -90,6 +90,22 @@
   background-color: var(--azul-hover);
 }
 
+.btn-add-estoque {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--azul-ultra);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.btn-add-estoque:hover {
+  background-color: var(--azul-hover);
+}
+
 .botoes-globais {
   display: flex;
   justify-content: flex-end;

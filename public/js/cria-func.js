@@ -3,6 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const msgErro = document.getElementById("mensagemErro");
   const cpfInput = document.getElementById("cpf");
   const celularInput = document.getElementById("numero");
+  const alerta = window.aviso.alerta;
+  const sucesso = window.aviso.sucesso;
+  const erro = window.aviso.erro;
+  const confirm = window.api.connfirmar;
 
   let estaEditando = null;
 
@@ -123,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         if (estaEditando) {
-          alert("Funcionário atualizado com sucesso!");
+          sucesso("Funcionário atualizado com sucesso!")
           form.reset();
           const btnCadastrar = document.getElementById("cadastrar");
           btnCadastrar.textContent = "Cadastrar";
@@ -131,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
           estaEditando = null;
           window.location.href = "/funcionarios";
         } else {
-          alert(`Funcionário cadastrado!\n\nLogin: ${data.loginGerado}\nSenha: ${data.senhaGerada}`);
+          alerta(`Funcionário cadastrado!\n\nLogin: ${data.loginGerado}\nSenha: ${data.senhaGerada}`);
           window.location.href = "/funcionarios";
         }
       } else {

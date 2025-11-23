@@ -37,9 +37,6 @@
 
                     <span class="coluna quantidade">
                       <%= p.estoque_saldo %>
-                        <button class="btn-add-estoque" data-id="<%= p.id_produtos %>">
-                          +
-                        </button>
                     </span>
 
                     <span class="coluna valor">R$ <%= p.valor %></span>
@@ -54,6 +51,9 @@
                       )">
                         $
                       </button>
+                      <button class="btn-add-estoque" data-id="<%= p.id_produtos %>">
+                          +
+                        </button>
 
                       <button class="btn-acao lixeira" onclick="deletar(<%= p.id_produtos %>)">
                         X

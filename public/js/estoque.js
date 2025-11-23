@@ -5,6 +5,10 @@ const modal = document.getElementById("modal");
 const abrirModal = document.getElementById("abrirModal");
 const fecharModal = document.getElementById("close");
 const cadastrar = document.getElementById("cadastrar");
+ const alerta = window.aviso.alerta;
+  const sucesso = window.aviso.sucesso;
+  const erro = window.aviso.erro;
+  const confirmacao = window.api.confirmar;
 
 // =========================
 // MODAL EDITAR
@@ -48,10 +52,10 @@ cadastrar.addEventListener("click", async () => {
     });
 
     if (response.ok) {
-      alert("Produto cadastrado!");
+    sucesso("Produto cadastrado!");
       location.reload();
     } else {
-      alert("Erro ao cadastrar produto");
+      erro("Erro ao cadastrar produto");
     }
   } catch (error) {
     console.error("Erro ao cadastrar:", error);
@@ -78,7 +82,7 @@ salvarEdicao.addEventListener("click", async () => {
   const preco = document.getElementById("editPreco").value.trim();
 
   if (!preco) {
-    alert("Informe o valor!");
+    alerta("Informe o valor!");
     return;
   }
 
@@ -90,10 +94,10 @@ salvarEdicao.addEventListener("click", async () => {
     });
 
     if (response.ok) {
-      alert("Atualizado!");
+      alerta("Atualizado!");
       location.reload();
     } else {
-      alert("Erro ao editar");
+      erro("Erro ao editar");
     }
   } catch (err) {
     console.error("Erro:", err);
@@ -104,7 +108,10 @@ salvarEdicao.addEventListener("click", async () => {
 // DELETAR PRODUTO
 // =========================
 window.deletar = async (id) => {
-  if (!confirm("Tem certeza que deseja excluir?")) return;
+
+  const resposta = await confirmacao("Tem certezaq que deseja excluir?");
+
+  if (resposta !== 0) return;
 
   try {
     const response = await fetch(`/api/produtos/produto/${id}`, {
@@ -112,10 +119,10 @@ window.deletar = async (id) => {
     });
 
     if (response.ok) {
-      alert("Produto excluído!");
+      sucesso("Produto excluído!");
       location.reload();
     } else {
-      alert("Erro ao excluir");
+      erro("Erro ao excluir");
     }
   } catch (err) {
     console.error("Erro:", err);
@@ -159,12 +166,12 @@ btnSalvarAdd.onclick = async () => {
   const preco_custo = document.getElementById("precoCustoAdd").value.trim();
 
   if (!quantidade || isNaN(quantidade)) {
-    alert("Digite uma quantidade válida");
+    alerta("Digite uma quantidade válida");
     return;
   }
 
   if (!preco_custo || isNaN(preco_custo) || preco_custo <= 0) {
-    alert("Digite um preço de custo válido");
+    alerta("Digite um preço de custo válido");
     return;
   }
 
@@ -184,11 +191,11 @@ btnSalvarAdd.onclick = async () => {
     const data = await response.json();
 
     if (response.ok) {
-      alert("Estoque atualizado!");
+      sucesso("Estoque atualizado!");
       modalAddEstoque.style.display = "none";
       location.reload();
     } else {
-      alert("Erro ao adicionar estoque: " + data.erro);
+      erro("Eero ao adicionar estoque: " + data.erro);
     }
   } catch (error) {
     console.error("Erro ao enviar estoque:", error);

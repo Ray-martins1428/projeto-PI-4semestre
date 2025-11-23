@@ -3,6 +3,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const campoPesquisa = document.getElementById('campoBusca');
   const iconeEnviar = document.querySelector('.icone-enviar');
   const iconePesquisa = document.querySelector('.icone-pesquisa');
+  const alerta = window.aviso.alerta;
+  const sucesso = window.aviso.sucesso;
+  const erro = window.aviso.erro;
+  const confirmacao = window.api.confirmar;
 
   // Função para carregar funcionários
   async function carregarFuncionarios(termo = '') {
@@ -90,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     } catch (error) {
       console.error('Erro:', error);
-      alert('Erro ao carregar dados do funcionário');
+      erro('Erro ao carregar dados do funcionário');
     }
   }
 

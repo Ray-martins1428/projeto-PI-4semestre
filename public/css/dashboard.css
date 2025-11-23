@@ -154,6 +154,12 @@
     transition: 0.2s;
 }
 
+#chartPizza {
+    width: 450px;   /* tamanho máximo */
+    height: 450px;    /* centraliza */
+    margin: 0 auto;
+}
+
 /* ===============================
    RESPONSIVIDADE
 ================================== */

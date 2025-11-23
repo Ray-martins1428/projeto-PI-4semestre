@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const tabela = document.getElementById("tabela-corpo");
   const campoBusca = document.getElementById("campoBusca");
+  const alerta = window.aviso.alerta;
+  const sucesso = window.aviso.sucesso;
+  const erro = window.aviso.erro;
+  const confirmacao = window.api.confirmar;
 
   let historico = []; // lista completa
   let historicoFiltrado = []; // lista filtrada

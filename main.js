@@ -64,7 +64,7 @@ ipcMain.handle("confirmacao-excluir", async (event, mensagem) => {
     message: mensagem,
   });
 
-  return result.response === 0; // true = clicou em "Sim"
+  return result.response;
 });
 
 ipcMain.handle("aviso-alerta", async (event, mensagem) => {
