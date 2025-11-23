@@ -25,15 +25,18 @@ function startServer() {
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1030,
+    width: 1250,
     height: 780,
     // resizable: false,
+
+    minWidth: 1100,
+    minHeight: 720,
 
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
-      nodeIntegration: false
-    }
+      nodeIntegration: false,
+    },
   });
 
   // Carregar página inicial (Express)
@@ -63,7 +66,6 @@ ipcMain.handle("confirmacao-excluir", async (event, mensagem) => {
 
   return result.response === 0; // true = clicou em "Sim"
 });
-
 
 ipcMain.handle("aviso-alerta", async (event, mensagem) => {
   await dialog.showMessageBox({

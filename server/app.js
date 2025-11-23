@@ -2,13 +2,12 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
-// === Carregar .env corretamente (pois app.js está dentro de /server) ===
 require("dotenv").config({
   path: path.join(__dirname, "../.env"),
 });
 
 const session = require("express-session");
-const db = require("./config/db"); // Conexão com o banco
+const db = require("./config/db");
 const PORT = process.env.PORT || 4040;
 
 // Rotas de páginas
@@ -21,11 +20,7 @@ const loginRoutes = require("./routes/api/loginRoutes");
 const funcionariosRoutes = require("./routes/api/funcionariosRoutes");
 const authRoutes = require("./routes/api/authRoutes");
 const dashboardRoutes = require("./routes/api/dashboardRoutes");
-const vendasRoutes = require("./routes/api/vendasRoutes");
 
-// ==========================
-//  SESSÃO
-// ==========================
 app.use(
   session({
     name: "sessid",
@@ -33,22 +28,17 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge:
-        Number(process.env.SESSION_MAX_AGE) || 1000 * 60 * 60 * 24, // 1 dia
+      maxAge: Number(process.env.SESSION_MAX_AGE) || 1000 * 60 * 60 * 24,
       httpOnly: true,
     },
   })
 );
 
-// Disponibiliza o usuário na view (EJS)
 app.use((req, res, next) => {
   res.locals.usuario = req.session?.usuario || null;
   next();
 });
 
-// ==========================
-//  Configurações gerais
-// ==========================
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../renderer/views"));
 
@@ -56,40 +46,28 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// ==========================
-//  ROTAS API
-// ==========================
+// ROTAS API
 app.use("/api", loginRoutes);
 app.use("/api/funcionarios", funcionariosRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/produtos", produtoRoutes); // <-- AQUI
 app.use("/api/historico", historicoRoutes);
-app.use("/api/vendas", vendasRoutes);
 
-// ==========================
-//  ROTAS DE PÁGINAS
-// ==========================
-app.use(produtoRoutes);
+// ROTAS DE PÁGINAS
 app.use(pageRoute);
 
-// ==========================
-//  ROTA RAIZ
-// ==========================
+// ROTA RAIZ
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-// ==========================
-//  Middleware de erro
-// ==========================
+// ERROS
 app.use((err, req, res, next) => {
   console.error("Erro no servidor:", err);
   res.status(500).send("Erro interno no servidor");
 });
 
-// ==========================
-//  Start
-// ==========================
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,113 +10,119 @@
 
 <body>
   <main class="container">
-
     <%- include('partials/navbar') %>
 
-    <section class="estq-container">
-      <div class="estq-content">
+      <section class="estq-container">
+        <div class="estq-content">
+          <div class="estq-card">
+            <div class="tabela-cabecalho">
+              <span class="coluna nome-prod">NOME</span>
+              <span class="coluna tipo">VOLUME</span>
+              <span class="coluna quantidade">QUANTIDADE</span>
+              <span class="coluna valor">VALOR</span>
+              <span class="coluna acoes"></span>
+            </div>
 
-        <div class="estq-card">
+            <!-- Corpo da tabela -->
+            <div class="tabela-corpo" id="tabela-corpo">
+              <% if (produtos && produtos.length> 0) { %> <% produtos.forEach((p)=> { %>
 
-          <div class="tabela-cabecalho">
-            <span class="coluna nome-prod">NOME</span>
-            <span class="coluna tipo">VOLUME</span>
-            <span class="coluna quantidade">QUANTIDADE</span>
-            <span class="coluna valor">VALOR</span>
-            <span class="coluna acoes"></span>
-          </div>
+                  <div class="tabela-linha">
+                    <span class="coluna nome-prod">
+                      <%= p.nome %>
+                    </span>
+                    <span class="coluna tipo">
+                      <%= p.volume %>
+                    </span>
 
-          <!-- Corpo da tabela -->
-          <div class="tabela-corpo" id="tabela-corpo">
-            
-            <% if (produtos && produtos.length > 0) { %>
-              <% produtos.forEach((p) => { %>
+                    <span class="coluna quantidade">
+                      <%= p.estoque_saldo %>
+                        <button class="btn-add-estoque" data-id="<%= p.id_produtos %>">
+                          +
+                        </button>
+                    </span>
 
-                <div class="tabela-linha">
-                  <span class="coluna nome-prod"><%= p.nome %></span>
-                  <span class="coluna tipo"><%= p.volume %></span>
+                    <span class="coluna valor">R$ <%= p.valor %></span>
 
-                  <span class="coluna quantidade">
-                    <%= p.estoque_saldo %>
-                    <button class="btn-add-estoque" data-id="<%= p.id_produtos %>">+</button>
-                  </span>
-
-                  <span class="coluna valor">R$ <%= p.valor %></span>
-
-                  <span class="coluna acoes">
-                    <button class="btn-acao editar"
-                      onclick="abrirEditar(
+                    <span class="coluna acoes">
+                      <button class="btn-acao editar" onclick="abrirEditar(
                         <%= p.id_produtos %>,
                         `<%- p.nome %>`,
                         `<%- p.volume %>`,
                         <%= p.estoque_saldo %>,
                         <%= p.valor %>
                       )">
-                      $
-                    </button>
+                        $
+                      </button>
 
-                    <button class="btn-acao lixeira" onclick="deletar(<%= p.id_produtos %>)">X</button>
-                  </span>
-                </div>
+                      <button class="btn-acao lixeira" onclick="deletar(<%= p.id_produtos %>)">
+                        X
+                      </button>
+                    </span>
+                  </div>
 
-              <% }) %>
+                  <% }) %>
+                    <% } else { %>
+                      <p style="text-align: center; margin-top: 15px">
+                        Nenhum produto encontrado.
+                      </p>
+                      <% } %>
+            </div>
 
-            <% } else { %>
-              <p style="text-align:center; margin-top:15px;">Nenhum produto encontrado.</p>
-            <% } %>
-
+            <div class="botoes-globais">
+              <button class="btn-global registrar" id="abrirModal">
+                Registrar Produto
+              </button>
+              <button class="btn-global historico" onclick="window.location.href='/historico'">
+                Acessar Histórico
+              </button>
+            </div>
           </div>
+        </div>
 
-          <div class="botoes-globais">
-            <button class="btn-global registrar" id="abrirModal">Registrar Produto</button>
-            <button class="btn-global historico" onclick="window.location.href='/historico'">Acessar Histórico</button>
+        <!-- MODAL CADASTRO -->
+        <div class="modal" id="modal">
+          <div class="modal-content">
+            <span class="close" id="close">&times;</span>
+            <h2>Cadastro de Produto</h2>
+
+            <input type="text" id="nome" placeholder="Nome do Produto" />
+            <input type="text" id="volume" placeholder="Volume" />
+            <input type="number" id="valor" placeholder="Preço" />
+            <input type="number" id="estoque_saldo" placeholder="Quantidade" />
+
+            <button class="btn-cadastrar" id="cadastrar">Cadastrar</button>
           </div>
-
         </div>
-      </div>
 
-      <!-- MODAL CADASTRO -->
-      <div class="modal" id="modal">
-        <div class="modal-content">
-          <span class="close" id="close">&times;</span>
-          <h2>Cadastro de Produto</h2>
+        <!-- MODAL EDITAR -->
+        <div class="modal" id="modalEditar">
+          <div class="modal-content">
+            <span class="close" id="closeEditar">&times;</span>
+            <h2>Editar Preço do Produto</h2>
 
-          <input type="text" id="nome" placeholder="Nome do Produto">
-          <input type="text" id="volume" placeholder="Volume">
-          <input type="number" id="valor" placeholder="Preço">
-          <input type="number" id="estoque_saldo" placeholder="Quantidade">
+            <input type="number" id="editPreco" placeholder="Preço" />
 
-          <button class="btn-cadastrar" id="cadastrar">Cadastrar</button>
+            <button class="btn-cadastrar" id="salvarEdicao">Salvar</button>
+          </div>
         </div>
-      </div>
 
-      <!-- MODAL EDITAR -->
-      <div class="modal" id="modalEditar">
-        <div class="modal-content">
-          <span class="close" id="closeEditar">&times;</span>
-          <h2>Editar Preço do Produto</h2>
+        <!-- MODAL ADICIONAR ESTOQUE -->
+        <div class="modal" id="modalAddEstoque">
+          <div class="modal-content">
+            <span class="close" id="closeAddEstoque">&times;</span>
+            <h2>Adicionar ao Estoque</h2>
 
-          <input type="number" id="editPreco" placeholder="Preço">
+            <input type="number" id="quantAdd" placeholder="Quantidade para adicionar">
 
-          <button class="btn-cadastrar" id="salvarEdicao">Salvar</button>
+            <button type="button" class="btn-cadastrar" id="salvarAddEstoque">Adicionar</button>
+          </div>
         </div>
-      </div>
-
-      <!-- MODAL ADICIONAR ESTOQUE -->
-      <div class="modal" id="modalAddEstoque">
-        <div class="modal-content">
-          <span class="close" id="closeAddEstoque">&times;</span>
-          <h2>Adicionar ao Estoque</h2>
-
-          <input type="number" id="quantAdd" placeholder="Quantidade para adicionar">
-
-          <button class="btn-cadastrar" id="salvarAddEstoque">Adicionar</button>
-        </div>
-      </div>
 
 
-      <script src="/js/estoque.js"></script>
-    </section>
+        <script src="/js/estoque.js"></script>
+      </section>
   </main>
 </body>
+
 </html>
