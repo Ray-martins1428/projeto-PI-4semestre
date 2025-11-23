@@ -14,7 +14,14 @@ cd projeto-PI-4semestre
 3. Em seguida, instale as dependências necessárias utilizando:
 npm install
 
-4. Crie um arquivo .env e adicione as variáveis de ambiente necessárias para conectar ao banco de dados.
+4. Lembre-se de pegar o dump do banco de dados na pasta: arquivo_db e cria-lo no seu MYSQL para conseguir fazer o sistema funcionar.
+as senhas dos usuários devem ser consultadas com os alunos. 
+
+5. Crie um arquivo .env e adicione as variáveis de ambiente necessárias para conectar ao banco de dados, a estrutura ficará dessa forma: 
+    DB_HOST = localhost
+    DB_USER = 
+    DB_PASSWORD = 
+    DB_DATABASE = 
 
 uso:
 Para iniciar o projeto e verificar seu funcionamento, execute no terminal (certifique-se de que o caminho do terminal está correto):
@@ -26,7 +33,7 @@ A contribuição dos participantes João Victor Viana Marcolino, Julio Braido, M
 Tecnologias Utilizadas:
 - Node.js
 - Express
-- mysql
+- Mysql
 
 Agradecimentos:
 Agradecimentos especiais a todos os mentores, responsáveis por guiar o desenvolvimento deste projeto com aulas interativas e muito enriquecidas de conteudo para a nossa carreira e para o desenvolvimento deste projeto. Os mais breves agradecimentos a instituição UNIFEOB, que disponibilizou recursos educacionais essenciais em cada etapa deste projeto, tornando possível a realização de nossos objetivos. A contribuição de ambos foi crucial para o nosso sucesso e desenvolvimento, tanto pessoal quanto profissional.
