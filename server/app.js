@@ -37,6 +37,16 @@ app.use(
 
 app.use((req, res, next) => {
   res.locals.usuario = req.session?.usuario || null;
+
+  // 
+  res.locals.isAdmin = res.locals.usuario &&
+                       (res.locals.usuario.perfil === 1 || 
+                        res.locals.usuario.perfil === 2 || 
+                        res.locals.usuario.login === 'ADMINISTRADOR' || 
+                        res.locals.usuario.login === 'GERENTE' || 
+                        res.locals.usuario.login === 'admin' || 
+                        res.locals.usuario.login === 'gerente');
+
   next();
 });
 
