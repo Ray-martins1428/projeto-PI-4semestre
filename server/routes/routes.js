@@ -24,11 +24,6 @@ router.get('/funcionarios', (req, res) => {
     res.render('funcionarios');
 });
 
-// Página Vendas
-router.get('/venda', (req, res) => {
-    res.render('venda');
-});
-
 // Criar funcionário
 router.get('/cria-func', (req, res) => {
   res.render('cria-func');
@@ -47,6 +42,19 @@ router.get('/estoque', async (req, res) => {
 // Página Histórico
 router.get('/historico', (req, res) => {
     res.render('historico');
+});
+
+
+// Página de Vendas 
+
+router.get('/venda', async (req, res) => {
+    try {
+        const [produtos] = await db.execute("SELECT * FROM produtos");
+        res.render("venda", { produtos });
+    } catch (err) {
+        console.error("Erro ao carregar produtos:", err);
+        res.render("venda", { produtos: [] });
+    }
 });
 
 module.exports = router;

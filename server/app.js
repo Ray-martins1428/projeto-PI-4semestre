@@ -20,6 +20,7 @@ const loginRoutes = require("./routes/api/loginRoutes");
 const funcionariosRoutes = require("./routes/api/funcionariosRoutes");
 const authRoutes = require("./routes/api/authRoutes");
 const dashboardRoutes = require("./routes/api/dashboardRoutes");
+const vendaRoutes = require("./routes/api/vendaRoutes");
 
 app.use(
   session({
@@ -53,6 +54,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/produtos", produtoRoutes); // <-- AQUI
 app.use("/api/historico", historicoRoutes);
+app.use("/api/vendas", vendaRoutes);
 
 // ROTAS DE PÁGINAS
 app.use(pageRoute);

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Gonçalves</title>
+  <title>Venda - Sistema Gonçalves</title>
 
   <link rel="stylesheet" href="/css/venda.css" />
 
@@ -12,49 +12,81 @@
 </head>
 
 <body>
-    <%- include('partials/navbar') %>
 
+  <%- include('partials/navbar') %>
 
   <main class="container">
     <section class="venda-container">
       <div class="venda-tela">
+
         <form id="form-venda">
           <h2 class="texto">Venda UltraGaz</h2>
 
+          <!-- Seleção do Produto -->
           <label for="produto">Produto</label>
           <select name="produto" id="produto" required>
             <option value="">Selecione um produto</option>
-            <option value="botijao13kg" data-preco="120">Botijão 13kg</option>
-            <option value="botijao45kg" data-preco="450">Botijão 45kg</option>
-            <option value="agua500ml" data-preco="3">Água 500ml</option>
+
+            <% produtos.forEach(prod => { %>
+              <option 
+                value="<%= prod.id_produtos %>" 
+                data-preco="<%= prod.valor %>">
+                <%= prod.nome %> (<%= prod.volume %>)
+              </option>
+            <% }) %>
           </select>
 
+          <!-- Quantidade -->
           <label for="quantidade">Quantidade</label>
-          <input type="number" name="quantidade" id="quantidade" min="1" value="1" required />
-          <div class="forma-pag">
-          <p>Forma de Pagamento:</p>
-          <div class="metodo-pag">
-          <label><input type="radio" name="pagamento" value="pix" required />
-            Pix</label>
-          <label><input type="radio" name="pagamento" value="credito" />
-            Crédito</label>
-          <label><input type="radio" name="pagamento" value="debito" />
-            Débito</label>
-          <label><input type="radio" name="pagamento" value="dinheiro" />
-            Dinheiro</label>
-            </div>
-            </div>
-          <label for="preco-unitario">Preço Unitário (R$)</label>
-          <input type="text" id="preco-unitario" readonly />
+          <input 
+            type="number" 
+            name="quantidade" 
+            id="quantidade" 
+            min="1" 
+            value="1" 
+            required 
+          />
 
+          <!-- Forma de Pagamento -->
+          <div class="forma-pag">
+            <p>Forma de Pagamento:</p>
+            <div class="metodo-pag">
+              <label><input type="radio" name="pagamento" value="1" /> Crédito</label>
+              <label><input type="radio" name="pagamento" value="2" /> Débito</label>
+              <label><input type="radio" name="pagamento" value="3" required /> Pix</label>
+              <label><input type="radio" name="pagamento" value="4" /> Dinheiro</label>
+            </div>
+          </div>
+
+          <!-- Preço Unitário -->
+          <label for="preco-unitario">Preço Unitário (R$)</label>
+          <input 
+            type="number" 
+            id="preco-unitario" 
+            name="preco_unitario" 
+            step="0.01" 
+            readonly 
+          />
+
+          <!-- Preço Total -->
           <label for="preco-total">Preço Total (R$)</label>
-          <input type="text" id="preco-total" readonly />
+          <input 
+            type="number" 
+            id="preco-total" 
+            name="preco_total" 
+            step="0.01" 
+            readonly 
+          />
 
           <button type="submit">Concluir Venda</button>
         </form>
+
       </div>
     </section>
   </main>
-</body>
 
+  <!-- Import do JS -->
+  <script src="/js/venda.js"></script>
+  
+</body>
 </html>
